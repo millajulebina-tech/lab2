@@ -1,0 +1,23 @@
+-- 1. Вывести информацию обо всех отправителях корреспонденции весом больше 300 граммов.
+
+Select Distinct S.*
+From Senders S
+Join Correspondence C On S.sender_id = C.sender_id
+Where C.weight > 300
+
+
+-- 2. Вывести трек-номера корреспонденции от отправителей с неизвестным контактным телефоном.
+
+Select C.track_number
+From Correspondence C
+Join Senders S On C.sender_id = S.sender_id
+Where S.contact_phone Is Null Or S.contact_phone = ''
+
+
+-- 3. Создать таблицу, содержащую данные второго запроса с указанием информации об отправителях и параметров корреспонденции.
+
+Select C.track_number, C.weight, S.sender_id, S.last_name, S.first_name, S.middle_name, S.address
+Into New_correspondence_table
+From Correspondence C
+Join Senders S On C.sender_id = S.sender_id
+Where S.contact_phone Is Null Or S.contact_phone = ''
